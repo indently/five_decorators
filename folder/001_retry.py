@@ -13,8 +13,11 @@ def retry(retries: int = 3, delay: float = 1) -> Callable:
     :return:
     """
 
-    def decorator(func: Callable) -> Callable:
+    # Don't let the user use this decorator if they are high
+    if retries < 1 or delay <= 0:
+        raise ValueError('Are you high, mate?')
 
+    def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs) -> Any:
             for i in range(1, retries + 1):  # 1 to retries + 1 since upper bound is exclusive
@@ -29,7 +32,7 @@ def retry(retries: int = 3, delay: float = 1) -> Callable:
                         print(f'"{func.__name__}()" failed after {retries} retries.')
                         break
                     else:
-                        print(f'Error: {repr(e)}. Retrying...')
+                        print(f'Error: {repr(e)} -> Retrying...')
                         sleep(delay)  # Add a delay before running the next iteration
 
         return wrapper
@@ -37,14 +40,14 @@ def retry(retries: int = 3, delay: float = 1) -> Callable:
     return decorator
 
 
-@retry(2, delay=1)
-def test_function() -> None:
+@retry(retries=1, delay=0)
+def connect() -> None:
     time.sleep(1)
-    raise Exception('Could not load data')
+    raise Exception('Could not connect to internet...')
 
 
 def main() -> None:
-    test_function()
+    connect()
 
 
 if __name__ == '__main__':
