@@ -40,7 +40,7 @@ def retry(retries: int = 3, delay: float = 1) -> Callable:
     return decorator
 
 
-@retry(retries=1, delay=0)
+@retry(retries=3, delay=1)
 def connect() -> None:
     time.sleep(1)
     raise Exception('Could not connect to internet...')
