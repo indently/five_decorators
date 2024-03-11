@@ -18,7 +18,7 @@ def count_vowels(text: str) -> int:
 
     # Count those damn vowels
     for letter in text:
-        if letter in 'aeiouAEIOU':
+        if letter.lower() in 'aeiou':
             vowel_count += 1
 
     return vowel_count
@@ -34,7 +34,8 @@ def main() -> None:
             print('Bot: Cache cleared!')
             count_vowels.cache_clear()
         else:
-            print(f'Bot: "{user_input}" contains {count_vowels(user_input)} vowels.')
+            print(
+                f'Bot: "{user_input}" contains {count_vowels(user_input)} vowels.')
 
 
 if __name__ == '__main__':
