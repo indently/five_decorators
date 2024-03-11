@@ -9,7 +9,7 @@ Seconds: TypeAlias = float
 
 def _ensure_inital_allowed(initial: Seconds) -> None:
     if initial < 1:
-        raise ValueError("Dawg you can't wait less than 0 seconds'")
+        raise ValueError("Dawg you can't wait less than 1 seconds'")
 
 
 class DelayStrategy(Protocol):
@@ -47,6 +47,7 @@ class Incremental:
         :param initial: The delay to start with
         :param step: Defines the step to increment which for each call, default to 1.0
         """
+
         _ensure_inital_allowed(initial)
         self.current = initial
 
@@ -69,6 +70,7 @@ class Exponential:
         """
         :param initial: The delay to start with
         """
+
         _ensure_inital_allowed(initial)
         self.current = initial
 
